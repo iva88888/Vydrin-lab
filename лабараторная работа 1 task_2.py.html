@@ -1,0 +1,35 @@
+<html>
+<head>
+<title>task_2.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #7a7e85;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #2aacb8;}
+.s4 { color: #6aab73;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+task_2.py</font>
+</center></td></tr></table>
+<pre><span class="s0"># TODO Найдите количество книг, которое можно разместить на дискете</span>
+<span class="s1">volume_disk </span><span class="s2">= </span><span class="s3">1.44</span>
+<span class="s1">pages_book </span><span class="s2">= </span><span class="s3">100</span>
+<span class="s1">lines_page </span><span class="s2">= </span><span class="s3">50</span>
+<span class="s1">symbols_line </span><span class="s2">= </span><span class="s3">25</span>
+<span class="s1">bytes_symbols </span><span class="s2">= </span><span class="s3">4</span>
+
+<span class="s1">volume_disk_bytes </span><span class="s2">= </span><span class="s1">volume_disk </span><span class="s2">* </span><span class="s3">1024 </span><span class="s2">* </span><span class="s3">1024</span>
+<span class="s1">total_of_symbols </span><span class="s2">= </span><span class="s1">symbols_line </span><span class="s2">* </span><span class="s1">lines_page </span><span class="s2">* </span><span class="s1">pages_book</span>
+<span class="s1">volume_book_bytes </span><span class="s2">= </span><span class="s1">total_of_symbols </span><span class="s2">* </span><span class="s1">bytes_symbols</span>
+
+<span class="s1">number_of_books </span><span class="s2">= </span><span class="s1">int </span><span class="s2">(</span><span class="s1">volume_disk_bytes </span><span class="s2">// </span><span class="s1">volume_book_bytes</span><span class="s2">)</span>
+
+<span class="s1">print</span><span class="s2">(</span><span class="s4">&quot;Количество книг, помещающихся на дискету:&quot;</span><span class="s2">, </span><span class="s1">number_of_books</span><span class="s2">)</span>
+</pre>
+</body>
+</html>
