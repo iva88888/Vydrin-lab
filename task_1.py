@@ -1,110 +1,58 @@
+class Book:
+    """ Базовый класс книги. """
+    def __init__(self, name: str, author: str):
+        self._name = name
+        self._author = author
 
-from abc import ABC, abstractmethod
+    @property
+    def name(self):
+        return self._name
 
-class Furniture(ABC):
-    def __init__(self, material: str, weight: float):
-        """
-        Инициализация класса Furniture.
+    @property
+    def author(self):
+        return self._author
 
-        :param material: Материал, из которого изготовлена мебель. Не должен быть пустым.
-        :param weight: Вес мебели в килограммах. Должен быть положительным числом.
+    def __str__(self):
+        return f"Книга {self.name}. Автор {self.author}"
 
-        :raises ValueError: Если material пустой или weight не положительный.
-
-        >>> chair = Furniture("Wood", 5.0)
-        >>> chair.material
-        'Wood'
-        >>> chair.weight
-        5.0
-        """
-        if not material:
-            raise ValueError("Material cannot be empty.")
-        if weight <= 0:
-            raise ValueError("Weight must be a positive number.")
-
-        self.material = material
-        self.weight = weight
-
-    @abstractmethod
-    def assemble(self) -> None:
-        """Собрать мебель."""
-        ...
-
-    @abstractmethod
-    def disassemble(self) -> None:
-        """Разобрать мебель."""
-        ...
+    def __repr__(self):
+        return f"{self.__class__.__name__}(name={self.name!r}, author={self.author!r})"
 
 
-class Tree(ABC):
-    def __init__(self, species: str, height: float):
-        """
-        Инициализация класса Tree.
+class PaperBook(Book):
+    def __init__(self, name: str, author: str, pages: int):
+        super().__init__(name, author)
+        self.pages = pages  # вызов свойства для проверки
 
-        :param species: Вид дерева. Не должен быть пустым.
-        :param height: Высота дерева в метрах. Должна быть положительным числом.
+    @property
+    def pages(self):
+        return self._pages
 
-        :raises ValueError: Если species пустой или height не положительный.
+    @pages.setter
+    def pages(self, value: int):
+        if not isinstance(value, int) or value <= 0:
+            raise ValueError("Количество страниц должно быть положительным целым числом.")
+        self._pages = value
 
-        >>> pine = Tree("Pine", 20.0)
-        >>> pine.species
-        'Pine'
-        >>> pine.height
-        25.0
-        """
-        if not species:
-            raise ValueError("Species cannot be empty.")
-        if height <= 0:
-            raise ValueError("Height must be a positive number.")
-
-        self.species = species
-        self.height = height
-
-    @abstractmethod
-    def grow(self, amount: float) -> None:
-        """Увеличить высоту дерева на заданное количество метров."""
-        ...
-
-    @abstractmethod
-    def shed_leaves(self) -> None:
-        """Сбросить листья дерева."""
-        ...
+    def __repr__(self):
+        return f"{self.__class__.__name__}(name={self.name!r}, author={self.author!r}, pages={self.pages})"
 
 
-class SocialMedia(ABC):
-    def __init__(self, name: str, users: int):
-        """
-        Инициализация класса SocialMedia.
+class AudioBook(Book):
+    def __init__(self, name: str, author: str, duration: float):
+        super().__init__(name, author)
+        self.duration = duration  # вызов свойства для проверки
 
-        :param name: Название социальной сети. Не должен быть пустым.
-        :param users: Количество пользователей. Должно быть неотрицательным числом.
+    @property
+    def duration(self):
+        return self._duration
 
-        :raises ValueError: Если name пустой или users отрицательный.
+    @duration.setter
+    def duration(self, value: float):
+        if not isinstance(value, (float, int)) or value <= 0:
+            raise ValueError("Продолжительность должна быть положительным числом.")
+        self._duration = float(value)
 
-        >>> ok = SocialMedia("OK", 2900000000)
-        >>> ok.name
-        'OK'
-        >>> ok.users
-        3900000
-        """
-        if not name:
-            raise ValueError("Name cannot be empty.")
-        if users < 0:
-            raise ValueError("Users cannot be negative.")
+    def __repr__(self):
+        return f"{self.__class__.__name__}(name={self.name!r}, author={self.author!r}, duration={self.duration})"
 
-        self.name = name
-        self.users = users
-
-    @abstractmethod
-    def post_update(self, content: str) -> None:
-        """Опубликовать обновление с заданным содержимым."""
-        ...
-
-    @abstractmethod
-    def delete_account(self) -> None:
-        """Удалить аккаунт социальной сети."""
-        ...
-
-if __name__ == "__main__":
-    # TODO работоспособность экземпляров класса проверить с помощью doctest
-    pass
