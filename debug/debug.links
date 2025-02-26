@@ -1,0 +1,58 @@
+#Для хранения ссылок и отслеживания, какие ссылки уже были выданы, можно использовать структуру данных, например, список или очередь. Также необходимо хранить информацию о том, какие ссылки были выданы каждому пользователю.
+# Стркутура нового эддера
+
+
+class LinkManager:
+    def __init__(self):
+        self.links = []  # Список всех доступных ссылок
+        self.user_links = {}  # Словарь для отслеживания выданных ссылок для каждого пользователя
+
+    def add_link(self, link):
+        self.links.append(link)
+
+    def get_unique_link(self, user_id):
+        if user_id not in self.user_links:
+            self.user_links[user_id] = []
+
+        # Получаем невыданные ссылки
+        available_links = [link for link in self.links if link not in self.user_links[user_id]]
+
+        if not available_links:
+            return None  # Все ссылки уже выданы
+
+        # Выдаем первую доступную ссылку (в порядке убывания)
+        unique_link = available_links[0]
+        self.user_links[user_id].append(unique_link)
+        return unique_link
+
+
+ #2 task
+#обработка Теперь необходимо реализовать обработку запроса на получение ссылки. В этом примере предполагается, что у Вас есть метод, который вызывается при нажатии кнопки "получить группу".
+
+
+def handle_get_group_request(user_id, link_manager):
+    unique_link = link_manager.get_unique_link(user_id)
+    if unique_link:
+        # Логика для отправки ссылки пользователю
+        print(f"Пользователь {user_id} получил ссылку: {unique_link}")
+    else:
+        print(f"Пользователь {user_id} не получил ссылку, все ссылки выданы.")
+
+
+#3 task
+# Пример Теперь можно создать экземпляр LinkManager, добавить ссылки и протестировать выдачу ссылок:
+
+link_manager = LinkManager()
+
+# Добавляем ссылки
+link_manager.add_link("http://club1.com")
+link_manager.add_link("http://club2.com")
+link_manager.add_link("http://club3.com")
+
+# Симуляция запросов от разных пользователей
+handle_get_group_request("user1", link_manager)
+handle_get_group_request("user2", link_manager)
+handle_get_group_request("user1", link_manager)  # user1 запрашивает снова
+handle_get_group_request("user3", link_manager)
+handle_get_group_request("user2", link_manager)  # user2 запрашивает снова
+
