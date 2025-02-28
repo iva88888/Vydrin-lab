@@ -3,6 +3,8 @@ from telegram.ext import Updater, CommandHandler, CallbackContext, MessageHandle
 from collections import deque
 
 # Инициализируем список ссылок
+TODO вот тут хелп
+
 links = deque([
     'https://link1.com',
     'https://link2.com',
@@ -11,11 +13,11 @@ links = deque([
 ])
 user_links = {}  # Словарь для хранения ссылки для каждого пользователя
 
-
+TODO мб это удалить так как функция задана выше?
 def start(update: Update, context: CallbackContext) -> None:
     update.message.reply_text('Привет! Нажмите кнопку, чтобы получить ссылку на группу.', reply_markup=main_menu())
 
-
+TODO Возможно то же самое, вырезать, или оставить и привязать к нашим параметрам
 def main_menu() -> InlineKeyboardMarkup:
     keyboard = [[InlineKeyboardButton("Получить группу", callback_data='get_group')]]
     return InlineKeyboardMarkup(keyboard)
@@ -51,5 +53,7 @@ def run_bot(token: str):
 
 
 if __name__ == '__main__':
-    # Замените 'YOUR_TELEGRAM_BOT_TOKEN' на ваш реальный токен
-    run_bot('YOUR_TELEGRAM_BOT_TOKEN')
+    # Замените нашим токеном TOKEN
+    TODO какой у нaс токен?
+
+    run_bot('TOKEN')
