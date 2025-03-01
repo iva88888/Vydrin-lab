@@ -1,0 +1,31 @@
+
+# Обработка Excel-файла и создание уникальных групп
+def process_excel():
+    logging.info("Читаем данные из Excel и формируем группы...")
+    filename = 'lichess club admins.xlsx'
+    workbook = load_workbook(filename)
+    sheet = workbook.active
+    af_column_index = 32
+    data = []
+
+    for row in sheet.iter_rows(min_row=2, values_only=True):
+        club_url = row[0]  # Предполагаем, что ссылка клуба находится в первом столбце
+        active_admins = row[af_column_index - 1]  # Количество активных администраторов
+        data.append((club_url, active_admins))
+
+    # Удаляем дубликаты и сортируем по убыванию количества активных администраторов
+    unique_data = list(set(data))
+    unique_data_sorted = sorted(unique_data, key=lambda x: x[1], reverse=True)
+
+    # Создаем список уникальных ссылок клубов в порядке убывания активации администраторов
+    unique_club_links = [club for club, _ in unique_data_sorted]
+    
+    logging.info(f"Создано {len(unique_club_links)} уникальных групп")
+    return unique_club_links
+
+# Вызов функции для проверки
+unique_groups = process_excel()
+
+# Дальше можно отправлять уникальные группы пользователям
+for index, group in enumerate(unique_groups):
+    print(f"Пользователь {index + 1} получает ссылку: {group}")
