@@ -2,22 +2,21 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater, CommandHandler, CallbackContext, MessageHandler, Filters
 from collections import deque
 
-# Инициализируем список ссылок
-TODO вот тут хелп
+# Инициализируем список ссылок из 1 столбца нашего excel файла
 
-links = deque([
-    'https://link1.com',
-    'https://link2.com',
-    'https://link3.com',
-    # Добавьте сюда больше ссылок
-])
-user_links = {}  # Словарь для хранения ссылки для каждого пользователя
+# Считываем ссылки из Excel файла
+def read_links_from_excel(lichess_club_admins.xlsx):  # тут по идее file_path надо, мб надо переписать ()
+    df = pd.read_excel(lichess_club_admins.xlsx)  # тут по идее file_path надо, мб надо переписать ()
+    return deque(df['Клуб URL'].dropna().tolist())  
 
-TODO мб это удалить так как функция задана выше?
+links = read_links_from_excel('lichess_club_admins.xlsx')  #  путь к  файлу Excel
+user_links = {}  # Словарь для хранения ссылок для каждого пользователя
+
+# TODO: мб это удалить так как функция задана выше?
 def start(update: Update, context: CallbackContext) -> None:
     update.message.reply_text('Привет! Нажмите кнопку, чтобы получить ссылку на группу.', reply_markup=main_menu())
 
-TODO Возможно то же самое, вырезать, или оставить и привязать к нашим параметрам
+# TODO: Возможно то же самое, вырезать, или оставить и привязать к нашим параметрам
 def main_menu() -> InlineKeyboardMarkup:
     keyboard = [[InlineKeyboardButton("Получить группу", callback_data='get_group')]]
     return InlineKeyboardMarkup(keyboard)
@@ -37,8 +36,6 @@ def button_handler(update: Update, context: CallbackContext) -> None:
                 query.edit_message_text(text=f'Ваша ссылка: {user_links[user_id]}')
             else:
                 query.edit_message_text(text='Извините, больше ссылок нет.')
-        else:
-            query.edit_message_text(text=f'Вы уже получили ссылку: {user_links[user_id]}')
 
 
 def run_bot(token: str):
@@ -54,6 +51,6 @@ def run_bot(token: str):
 
 if __name__ == '__main__':
     # Замените нашим токеном TOKEN
-    TODO какой у нaс токен?
+    # TODO: какой у нaс токен?
 
     run_bot('TOKEN')
